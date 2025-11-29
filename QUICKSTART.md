@@ -1,4 +1,4 @@
-# VeriPulse - 10-Minute Quickstart Guide
+# SureSignal - 10-Minute Quickstart Guide
 
 ## ⚡ Super Fast Setup
 
@@ -16,7 +16,7 @@
 ```bash
 # 1. Clone repo
 git clone <your-repo>
-cd veripulse
+cd SureSignal
 
 # 2. Create .env file
 cat > .env << 'EOF'
@@ -24,7 +24,7 @@ OPENAI_API_KEY=sk-your-key-here
 GOOGLE_API_KEY=your-gemini-key-here
 PINECONE_API_KEY=your-pinecone-key-here
 PINECONE_ENVIRONMENT=gcp-starter
-PINECONE_INDEX_NAME=veripulse-evidence
+PINECONE_INDEX_NAME=SureSignal-evidence
 MONGODB_URI=mongodb://mongodb:27017/
 EOF
 
@@ -46,7 +46,7 @@ docker-compose up -d
 
 1. Go to https://www.pinecone.io/ and sign in
 2. Click "Create Index"
-   - Name: `veripulse-evidence`
+   - Name: `SureSignal-evidence`
    - Dimensions: `768`
    - Metric: `cosine`
 3. Copy your API key
@@ -55,8 +55,8 @@ docker-compose up -d
 
 ```bash
 # Clone or create directory
-mkdir veripulse
-cd veripulse
+mkdir SureSignal
+cd SureSignal
 
 # Create structure
 mkdir -p backend/agents backend/services frontend/src
@@ -71,9 +71,9 @@ OPENAI_API_KEY=your-openai-key-here
 GOOGLE_API_KEY=your-gemini-key-here
 PINECONE_API_KEY=your-pinecone-key-here
 PINECONE_ENVIRONMENT=gcp-starter
-PINECONE_INDEX_NAME=veripulse-evidence
+PINECONE_INDEX_NAME=SureSignal-evidence
 MONGODB_URI=mongodb://localhost:27017/
-MONGODB_DB_NAME=veripulse
+MONGODB_DB_NAME=SureSignal
 EOF
 
 # Edit with your actual keys
@@ -113,7 +113,7 @@ cd frontend
 # Create package.json
 cat > package.json << 'EOF'
 {
-  "name": "veripulse-frontend",
+  "name": "SureSignal-frontend",
   "version": "1.0.0",
   "dependencies": {
     "react": "^18.2.0",
@@ -139,7 +139,7 @@ cat > public/index.html << 'EOF'
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>VeriPulse</title>
+    <title>SureSignal</title>
   </head>
   <body>
     <div id="root"></div>
@@ -247,7 +247,7 @@ cd frontend && npm install
 # Create index manually
 import pinecone
 pinecone.init(api_key="your-key", environment="gcp-starter")
-pinecone.create_index("veripulse-evidence", dimension=768, metric="cosine")
+pinecone.create_index("SureSignal-evidence", dimension=768, metric="cosine")
 ```
 
 ### "MongoDB connection failed"
