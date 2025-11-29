@@ -1,169 +1,421 @@
-# 🌐 SureSignal — AI-Powered Misinformation Detection Agent  
-### Mumbai Hacks 2025 — Project Submission  
+# VeriPulse - AI Agent for Detecting and Verifying Misinformation
 
-SureSignal is an AI-driven agent designed to **detect, verify, and explain misinformation** spreading across social platforms during local or global crises.  
-Our system helps people get **accurate, verified, real-time facts** from trusted sources — instantly and anywhere.
+## 🎯 Overview
 
----
+VeriPulse is an AI-powered verification system that detects, verifies, and explains misinformation in real-time using a collaborative multi-agent architecture with RAG (Retrieval-Augmented Generation).
 
-## 🚀 Problem Statement  
-In moments of crisis, misinformation spreads rapidly across social media platforms like X (Twitter), Reddit, and Threads.  
-False claims lead to **panic, confusion, and mistrust**.  
-The challenge is to build an AI agent that can:
+### Key Features
 
-- Scan multiple content streams  
-- Detect emerging misinformation trends  
-- Cross-verify claims using reliable sources  
-- Provide contextual, audience-friendly explanations  
-
-SureSignal directly targets this problem by providing *real-time fact verification and easy access to truth*.
+- **6 Collaborative AI Agents** using CrewAI
+- **RAG Pipeline** with Pinecone vector database + MongoDB
+- **Real-time Source Crawling** from trusted sources (PIB, WHO, AP News)
+- **NLP Entailment Models** for fact verification
+- **Twitter/Reddit Bot** with `@VeriPulseBot` and `#VeriCheck`
+- **Web Portal** for public verification
+- **ELI12 Explanations** for accessibility
 
 ---
 
-## ✅ Our Solution — SureSignal  
-SureSignal is built as a **multi-platform AI agent** that users can access in two ways:
+## 🏗️ Architecture
 
-### **1️⃣ Taggable AI Bot (X, Reddit, Threads)**  
-Users simply **tag @SureSignalBot** under any post or comment.
+### Multi-Agent System
 
-The bot replies with:  
-- ✔️ Verdict: True / False / Misleading / Unverified  
-- ✔️ Confidence Score  
-- ✔️ Verified sources (Gov portals, news APIs, fact-check DBs)  
-- ✔️ Human-friendly explanation  
+1. **Ingestion/Collector Agent** - Monitors Twitter, Reddit, RSS feeds
+2. **Claim Extraction & Clustering Agent** - Extracts claims, deduplicates, detects trends
+3. **Evidence Retrieval Agent** - RAG queries + real-time crawling
+4. **Veracity Scoring Agent** - NLI entailment + confidence scoring
+5. **Explanation Agent** - Generates detailed + ELI12 explanations
+6. **Orchestrator Agent** - Coordinates workflow, rate limiting, bot replies
 
-This makes fact-checking accessible *exactly where misinformation spreads*.
+### Tech Stack
 
----
-
-### **2️⃣ SureSignal Web App**  
-A dedicated web portal where users can:
-
-- 🔍 Enter text or links to verify news  
-- 🖼️ Upload images/screenshots of posts  
-- 📊 Get AI-generated explanations  
-- 🔗 View verified sources  
-- 🌍 Switch between simple or detailed explanation modes  
-
-This works like a **ChatGPT-style interface** trained specifically for misinformation detection.
+- **Backend**: Flask + CrewAI + LangChain
+- **Frontend**: React + Tailwind CSS
+- **LLMs**: OpenAI GPT-4 + Google Gemini
+- **Databases**: MongoDB (metadata) + Pinecone (embeddings)
+- **NLP**: Sentence Transformers, DeBERTa (NLI)
+- **Deployment**: Docker + Docker Compose
 
 ---
 
-## 🧠 How It Works — System Architecture  
-SureSignal contains five core components:
+## 🚀 Quick Start
 
-### **1. Stream Monitoring Module**  
-Fetches trending crisis-related posts from social platforms.
+### Prerequisites
 
-### **2. Claim Extraction (NLP)**  
-Breaks long posts into a clean, verifiable “claim”.
+- Python 3.9+
+- Node.js 16+
+- Docker & Docker Compose
+- OpenAI API key
+- Google Gemini API key
+- Pinecone account
 
-### **3. Evidence Retrieval Engine**  
-Cross-checks claims using:  
-- Government advisories (IMD, NDMA, WHO, UN, etc.)  
-- Trusted news APIs  
-- Fact-check databases (Snopes, AltNews, FactCheck.org)  
+### 1. Clone & Setup
 
-### **4. AI Verification Engine**  
-Uses NLP + NLI models to classify claims as:  
-**True / False / Misleading / Unverified**
+```bash
+# Clone repository
+git clone <your-repo-url>
+cd veripulse
 
-### **5. Explainability Layer**  
-Provides results in multiple modes:  
-- “Explain like I’m 12”  
-- Detailed technical explanation  
-- Source-based breakdown  
+# Create environment file
+cp .env.template .env
+# Edit .env with your API keys
+```
 
----
+### 2. Install Dependencies
 
-## 🛠️ Tech Stack  
+**Backend:**
+```bash
+cd backend
+pip install -r requirements.txt
+```
 
-### **Frontend**  
-- React.js  
-- Tailwind CSS  
-- ShadCN UI  
-- Axios  
+**Frontend:**
+```bash
+cd frontend
+npm install
+```
 
-### **Backend**  
-- Python (FastAPI)  
-- Flask  
-- Node.js (for bot services)
+### 3. Setup Pinecone
 
-### **AI / NLP**  
-- HuggingFace Transformers  
-- BERT / RoBERTa / LLaMA-based NLI Models  
-- Sentence-BERT  
-- SpaCy
+1. Create account at https://www.pinecone.io/
+2. Create a new index named `veripulse-evidence`
+3. Use dimension: `768` (for sentence-transformers/all-mpnet-base-v2)
+4. Metric: `cosine`
+5. Add API key to `.env`
 
-### **Databases**  
-- PostgreSQL  
-- Redis Caching  
+### 4. Run with Docker (Recommended)
 
-### **Integrations**  
-- X (Twitter) API  
-- Reddit API (PRAW)  
-- Threads API (unofficial)  
-- Google News API  
-- Fact-check datasets  
+```bash
+# Start all services
+docker-compose up -d
 
-### **Deployment**  
-- Docker  
-- Render / AWS EC2 / Vercel  
-- GitHub Actions  
+# View logs
+docker-compose logs -f
 
----
+# Stop services
+docker-compose down
+```
 
-## 🎯 Key Features  
-- ⚡ Real-time misinformation detection  
-- 🤖 Taggable bot across multiple platforms  
-- 💬 Chat-style web app for manual verification  
-- 🌐 Multilingual support (English, Hindi, Marathi)  
-- 📝 Contextual explanations with sources  
-- 🔎 Screenshot/image-based verification  
-- 🧩 Modular, scalable architecture  
+Services will be available at:
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:5000
+- MongoDB: localhost:27017
 
----
+### 5. Run Locally (Development)
 
-## 👨‍💻 Team  
-**Team Name:** SureSignal  
-**Members:**  
-- Sandesh (Team Leader)  
-- Omkar  
-- Mahesh  
-- Harsha  
+**Terminal 1 - MongoDB:**
+```bash
+mongod --dbpath ./data/db
+```
 
----
+**Terminal 2 - Backend:**
+```bash
+cd backend
+python app.py
+```
 
-## 📌 Future Improvements  
-- Chrome/Edge browser extension  
-- WhatsApp/Telegram bot integration  
-- Advanced crisis-specific AI models  
-- Multimedia (video/audio) fact verification  
-- Deeper integration with official government APIs  
+**Terminal 3 - Frontend:**
+```bash
+cd frontend
+npm start
+```
 
 ---
 
-## 📢 Why SureSignal Matters  
-SureSignal empowers people to access **truth** immediately, especially during moments when false information can cause harm.  
-It bridges the gap between misinformation and clarity by combining:  
-✔️ AI  
-✔️ Verified sources  
-✔️ Human-friendly explanations  
+## 📡 API Endpoints
 
-Our mission is simple: **Stop misinformation at the source.**
+### Verify Text
+```bash
+POST /api/verify
+Content-Type: application/json
+
+{
+  "text": "Tsunami warning issued in Mumbai",
+  "user_id": "optional_user_id"
+}
+```
+
+### Verify URL
+```bash
+POST /api/verify-url
+Content-Type: application/json
+
+{
+  "url": "https://example.com/article"
+}
+```
+
+### Get Trending Claims
+```bash
+GET /api/trending?keywords=tsunami,earthquake,flood
+```
+
+### System Statistics
+```bash
+GET /api/stats
+```
 
 ---
 
-## 🖼️ Screenshots / Demo  
-*(Add your images, demo GIFs, or links here)*
+## 🤖 Bot Setup (Optional)
+
+### Twitter Bot
+
+1. Create Twitter Developer account
+2. Create app and get API keys
+3. Add credentials to `.env`:
+   ```
+   TWITTER_API_KEY=...
+   TWITTER_API_SECRET=...
+   TWITTER_ACCESS_TOKEN=...
+   TWITTER_ACCESS_SECRET=...
+   TWITTER_BEARER_TOKEN=...
+   ```
+
+4. Users tag bot: `@VeriPulseBot #VeriCheck <claim>`
+
+### Reddit Bot
+
+1. Create Reddit app at https://www.reddit.com/prefs/apps
+2. Get client ID and secret
+3. Add to `.env`:
+   ```
+   REDDIT_CLIENT_ID=...
+   REDDIT_CLIENT_SECRET=...
+   ```
+
+4. Users mention: `u/VeriPulseBot <claim>`
+
+### Process Mentions
+
+```bash
+# Trigger bot to check mentions
+POST /api/bot/mentions
+```
 
 ---
 
-## 📬 Contact  
-For any questions or contributions:  
-**Email:** sandeshbramhane7884@gmail.com  
+## 🔍 How It Works
+
+### Verification Pipeline
+
+1. **User submits claim** (via bot tag or web portal)
+2. **Claim extraction** - Canonicalize and normalize text
+3. **Evidence retrieval**:
+   - Search vector DB for similar evidence
+   - If insufficient, crawl trusted sources in real-time
+   - Index new evidence
+4. **Veracity check**:
+   - Run NLI entailment model
+   - LLM-based semantic analysis
+   - Aggregate into verdict: TRUE/FALSE/MISLEADING/UNVERIFIED
+5. **Explanation generation**:
+   - Detailed explanation
+   - ELI12 simple version
+   - Citations with sources
+6. **Response delivery**:
+   - Bot replies on social media
+   - Web portal displays full report
+
+### RAG System
+
+- **Embedding Model**: sentence-transformers/all-mpnet-base-v2
+- **Vector Store**: Pinecone (768 dimensions)
+- **Similarity Search**: Top-5 most relevant evidence
+- **Real-time Crawling**: Fetches fresh articles from PIB, WHO, AP News
+- **Metadata Storage**: MongoDB (titles, URLs, timestamps)
 
 ---
 
-### ⭐ If you like our work, please give this project a star!  
+## 📊 Example Usage
 
+### Web Portal
+
+1. Go to http://localhost:3000
+2. Enter claim: "Tsunami warning issued in Mumbai"
+3. Click "Verify Claim"
+4. View results:
+   - Verdict: FALSE
+   - Confidence: 85%
+   - Explanation: "No official tsunami warning from IMD or NDMA"
+   - Sources: [IMD Report], [NDMA Update]
+
+### Twitter Bot
+
+```
+Tweet: @VeriPulseBot #VeriCheck Tsunami warning in Mumbai!
+
+Bot Reply:
+❌ Verdict: FALSE (85% confidence)
+
+📝 No official tsunami warning has been issued by IMD or NDMA 
+for Mumbai. This claim is not supported by authoritative sources.
+
+📚 Sources:
+• IMD: No active tsunami alerts
+  https://mausam.imd.gov.in/...
+• NDMA: No coastal warnings
+  https://ndma.gov.in/...
+
+🔗 Full report: [link]
+```
+
+---
+
+## 🔧 Configuration
+
+### Trusted Sources
+
+Edit `backend/config.py` to add/remove sources:
+
+```python
+TRUSTED_SOURCES = {
+    "pib": "https://pib.gov.in/",
+    "who": "https://www.who.int/",
+    "reuters": "https://www.reuters.com/",
+    "ap_news": "https://apnews.com/",
+    "imd": "https://mausam.imd.gov.in/",
+    "ndma": "https://ndma.gov.in/"
+}
+```
+
+### Rate Limiting
+
+```python
+RATE_LIMIT_REQUESTS = 100  # per user
+RATE_LIMIT_PERIOD = 3600   # 1 hour
+```
+
+### Confidence Thresholds
+
+```python
+CONFIDENCE_THRESHOLD = 0.6
+SIMILARITY_THRESHOLD = 0.75
+```
+
+---
+
+## 📝 Development
+
+### Add New Agent
+
+1. Create file in `backend/agents/`
+2. Inherit from `Agent` class
+3. Define role, goal, backstory
+4. Add to orchestrator workflow
+
+### Add New Source
+
+1. Edit `source_crawler.py`
+2. Add crawling method
+3. Add source to config
+4. Update RSS feeds list
+
+### Customize Verdicts
+
+Edit `veracity_agent.py` → `_aggregate_verdicts()` method
+
+---
+
+## 🎨 UI Customization
+
+Frontend uses Tailwind CSS. Edit `frontend/src/App.js` to modify:
+
+- Colors: Change `bg-indigo-600` to other Tailwind colors
+- Layout: Modify component structure
+- Verdict icons: Update `verdictConfig` object
+
+---
+
+## 🚢 Deployment
+
+### Cloud Deployment (Production)
+
+**Backend (Railway/Render):**
+1. Push code to GitHub
+2. Connect to Railway/Render
+3. Add environment variables
+4. Deploy
+
+**Frontend (Vercel):**
+1. Push to GitHub
+2. Import to Vercel
+3. Set `REACT_APP_API_URL` to backend URL
+4. Deploy
+
+**MongoDB Atlas:**
+1. Create cluster
+2. Get connection string
+3. Update `MONGODB_URI`
+
+**Pinecone:**
+- Already cloud-hosted ✅
+
+---
+
+## 🧪 Testing
+
+### Test Single Verification
+
+```bash
+curl -X POST http://localhost:5000/api/verify \
+  -H "Content-Type: application/json" \
+  -d '{"text": "WHO declares new pandemic"}'
+```
+
+### Test Crawling
+
+```bash
+curl -X POST http://localhost:5000/api/crawl
+```
+
+### Check Stats
+
+```bash
+curl http://localhost:5000/api/stats
+```
+
+---
+
+## 🛠️ Troubleshooting
+
+### "Pinecone index not found"
+- Create index in Pinecone dashboard
+- Verify `PINECONE_INDEX_NAME` in `.env`
+
+### "MongoDB connection failed"
+- Start MongoDB: `mongod`
+- Check `MONGODB_URI` in `.env`
+
+### "NLI model loading error"
+- Run: `pip install transformers torch`
+- Model auto-downloads on first run
+
+### "Rate limit exceeded"
+- Adjust `RATE_LIMIT_REQUESTS` in config
+- Clear MongoDB interaction history
+
+---
+
+## 📄 License
+
+MIT License - See LICENSE file
+
+---
+
+## 🤝 Contributing
+
+1. Fork repository
+2. Create feature branch
+3. Commit changes
+4. Push and create PR
+
+---
+
+## 📞 Support
+
+For issues, create GitHub issue or contact team.
+
+---
+
+**Built with ❤️ for the hackathon**
