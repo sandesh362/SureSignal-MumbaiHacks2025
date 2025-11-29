@@ -1,8 +1,8 @@
-# VeriPulse - AI Agent for Detecting and Verifying Misinformation
+# SureSignal - AI Agent for Detecting and Verifying Misinformation
 
 ## 🎯 Overview
 
-VeriPulse is an AI-powered verification system that detects, verifies, and explains misinformation in real-time using a collaborative multi-agent architecture with RAG (Retrieval-Augmented Generation).
+SureSignal is an AI-powered verification system that detects, verifies, and explains misinformation in real-time using a collaborative multi-agent architecture with RAG (Retrieval-Augmented Generation).
 
 ### Key Features
 
@@ -10,7 +10,7 @@ VeriPulse is an AI-powered verification system that detects, verifies, and expla
 - **RAG Pipeline** with Pinecone vector database + MongoDB
 - **Real-time Source Crawling** from trusted sources (PIB, WHO, AP News)
 - **NLP Entailment Models** for fact verification
-- **Twitter/Reddit Bot** with `@VeriPulseBot` and `#VeriCheck`
+- **Twitter/Reddit Bot** with `@SureSignalBot` and `#VeriCheck`
 - **Web Portal** for public verification
 - **ELI12 Explanations** for accessibility
 
@@ -54,7 +54,7 @@ VeriPulse is an AI-powered verification system that detects, verifies, and expla
 ```bash
 # Clone repository
 git clone <your-repo-url>
-cd veripulse
+cd SureSignal
 
 # Create environment file
 cp .env.template .env
@@ -78,7 +78,7 @@ npm install
 ### 3. Setup Pinecone
 
 1. Create account at https://www.pinecone.io/
-2. Create a new index named `veripulse-evidence`
+2. Create a new index named `SureSignal-evidence`
 3. Use dimension: `768` (for sentence-transformers/all-mpnet-base-v2)
 4. Metric: `cosine`
 5. Add API key to `.env`
@@ -172,7 +172,7 @@ GET /api/stats
    TWITTER_BEARER_TOKEN=...
    ```
 
-4. Users tag bot: `@VeriPulseBot #VeriCheck <claim>`
+4. Users tag bot: `@SureSignalBot #VeriCheck <claim>`
 
 ### Reddit Bot
 
@@ -184,7 +184,7 @@ GET /api/stats
    REDDIT_CLIENT_SECRET=...
    ```
 
-4. Users mention: `u/VeriPulseBot <claim>`
+4. Users mention: `u/SureSignalBot <claim>`
 
 ### Process Mentions
 
@@ -243,7 +243,7 @@ POST /api/bot/mentions
 ### Twitter Bot
 
 ```
-Tweet: @VeriPulseBot #VeriCheck Tsunami warning in Mumbai!
+Tweet: @SureSignalBot #VeriCheck Tsunami warning in Mumbai!
 
 Bot Reply:
 ❌ Verdict: FALSE (85% confidence)
