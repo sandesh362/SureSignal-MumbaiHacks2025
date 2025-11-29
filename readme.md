@@ -286,15 +286,6 @@ RATE_LIMIT_REQUESTS = 100  # per user
 RATE_LIMIT_PERIOD = 3600   # 1 hour
 ```
 
-### Confidence Thresholds
-
-```python
-CONFIDENCE_THRESHOLD = 0.6
-SIMILARITY_THRESHOLD = 0.75
-```
-
----
-
 ## 📝 Development
 
 ### Add New Agent
